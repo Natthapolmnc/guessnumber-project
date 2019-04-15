@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.Controller.ServerLog">
+   <children>
+      <MenuBar fx:id="menu">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="ClearButton" mnemonicParsing="false" onAction="#ClearLog" text="Clear" />
+              <MenuItem fx:id="CloseButton" mnemonicParsing="false" onAction="#CloseSever" text="Close" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TextArea fx:id="LogText" blendMode="MULTIPLY" editable="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="377.0" prefWidth="640.0" wrapText="true">
+         <font>
+            <Font name="Calibri Italic" size="13.0" />
+         </font></TextArea>
+   </children>
+</VBox>
