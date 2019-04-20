@@ -110,35 +110,30 @@ public class Server extends Application {
             }
             while (!(win)) {
             for (int i=0;i<numPlayer;i++){
+                System.out.println(i);
+                if(win){
+                    break;
+                }
                 out[i].write("Ready");
                 out[i].newLine();
                 out[i].flush();
                 out[i].write("Your turn: Now clue: "+ clueHint );
                 out[i].newLine();
                 out[i].flush();
-                String receive=in[i].readLine();
-                if (receive.equals(name[i])){
-                    receive=in[i].readLine();
-                }
+                String answer=in[i].readLine();
+                System.out.println(answer);
                 boolean correct=false;
-                for (int j = 0; j < receive.length(); j++) {
-                    if (receive.charAt(j) == password.charAt(j)) {
+                for (int j = 0; j < answer.length(); j++) {
+                    if (answer.charAt(j) == password.charAt(j)) {
                         correct = true;
-                        clue[j] = receive.charAt(j);
+                        clue[j] = answer.charAt(j);
                     }
                 }
                     clueHint = "";
                     for (char z : clue) {
                         clueHint += z;
                     }
-                    if (win){
-                        out[i].write("YOU NOOB!");
-                        out[i].newLine();
-                        out[i].flush();
-                        out[i].write("NOOB");
-                        out[i].newLine();
-                        out[i].flush();
-                    }else if (clueHint.equals(password)){
+                    if (answer.equals(password)){
                         win=true;
                         out[i].write("You Win");
                         out[i].newLine();
@@ -146,8 +141,8 @@ public class Server extends Application {
                         out[i].write("WIN");
                         out[i].newLine();
                         out[i].flush();
-                    }else if (correct) {
-                        addText(name[i]+"correct some now clue"+clueHint);
+                    }if (correct) {
+                        addText(name[i]+" correct some now clue "+clueHint);
                         out[i].write("Wait");
                         out[i].newLine();
                         out[i].flush();
@@ -155,7 +150,7 @@ public class Server extends Application {
                         out[i].newLine();
                         out[i].flush();
                     } else {
-                        addText(name[i]+"All wrong"+clueHint);
+                        addText(name[i]+" All wrong "+clueHint);
                         out[i].write("Wait");
                         out[i].newLine();
                         out[i].flush();
@@ -166,7 +161,13 @@ public class Server extends Application {
 
                 }
             }
-            JOptionPane.showMessageDialog(null,"GAME OVER","GAME",JOptionPane.INFORMATION_MESSAGE);
+                for(BufferedWriter to:out){
+                    System.out.println();
+                    to.write("END");
+                    to.newLine();
+                    to.flush();
+                }
+            JOptionPane.showMessageDialog(null,"END","SERVER",JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
 
             }catch(IOException error){

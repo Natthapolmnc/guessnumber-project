@@ -30,19 +30,16 @@ public class Game {
 
     public void run(){
         try {
+            win=false;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/client/resources/FXML/PlayerInterface.fxml"));
             Parent root = loader.load();
             Scene gameScene = new Scene(root);
             game.setTitle("Game");
             game.initStyle(StageStyle.DECORATED);
-
             game.setScene(gameScene);
             game.show();
             new Thread(() -> {
                 try {
-                    out.write(NameInput.getName());
-                    out.newLine();
-                    out.flush();
                     do {
                         command = in.readLine();
                         System.out.println(command);
@@ -64,13 +61,12 @@ public class Game {
                             setLogText(text);
                         } else if (command.equals("WIN")){
                             JOptionPane.showMessageDialog(null,"Congratulation!!, You WIN","YOU WIN",JOptionPane.INFORMATION_MESSAGE);
-                            command="END";
-                        }else if (command.equals("NOOB")){
-                            JOptionPane.showMessageDialog(null,"YOU LOSE!","LOSE",JOptionPane.INFORMATION_MESSAGE);
-                            command="END";
-                        }
-
-                    } while (command != "END");
+                            win=true;}
+                    } while (!(command.equals("END")));
+                    if (!(win)){
+                        setLogText("You LOSE!");
+                        JOptionPane.showMessageDialog(null,"YOU LOSE!","LOSE",JOptionPane.INFORMATION_MESSAGE);
+                    }
                     System.exit(0);
                 } catch (IOException error) {
                     JOptionPane.showMessageDialog(null,"Server down.","Error",JOptionPane.ERROR_MESSAGE);
